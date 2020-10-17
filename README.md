@@ -1240,10 +1240,6 @@ Citation: https://www.researchgate.net/post/Are_Random_Forests_affected_by_multi
 # MODEL
 
 
-```python
-#Lead with a logistic regression model before RandomForest
-#Helps to show superiority of the RandomForest...and important to understand how to use
-```
 
 > **Model selection thought process:**
 > - After exploring the data, we can see that even after preprocessing we'll have data with class imbalance and multicollinearity issues that will effect our model's prediction accuracy. In other words, because our target variable ("churn") has way more "False" entries, our model will probably be great at predicting when a customer will stay with SyriaTel, but not great at predicting if they are going to cancel their contract ("churn" = "True"). 
