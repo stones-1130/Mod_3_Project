@@ -58,20 +58,6 @@ df.head()
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -317,19 +303,6 @@ display(df.info(), df.describe(), df.isna().sum(), df.shape)
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -559,6 +532,8 @@ display(df.info(), df.describe(), df.isna().sum(), df.shape)
 
 target = df['churn'].value_counts()
 sns.barplot(target.index, target.values).set_title("SyriaTel Customer Churn from Area Codes 408, 415, 510")
+plt.xlabel('Churn count')
+plt.ylabel('Churn')
 
 churn_count = pd.DataFrame(target)
 display(churn_count)
@@ -566,19 +541,6 @@ display(churn_count)
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -626,7 +588,7 @@ df['churn'].value_counts(normalize=True)
 
 
 ```python
-#CUSTOMER SERVICE CALLS AND CHURN
+#RAW NUMBER OF CUSTOMER SERVICE CALLS
 y = df['customer service calls'].value_counts()
 
 sns.barplot(y.index, y.values);
@@ -667,6 +629,202 @@ plt.show()
 ![png](output_21_0.png)
 
 
+
+```python
+#TAKE A MORE DETAILED LOOK AT HOW CUSTOMER SERVICE CALLS CORRELATE TO CHURN
+
+cust_svc_churn = df.groupby(["customer service calls", "churn"]).size()
+cs_df = pd.DataFrame(cust_svc_churn)
+display(cs_df)
+```
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>0</th>
+    </tr>
+    <tr>
+      <th>customer service calls</th>
+      <th>churn</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2" valign="top">0</td>
+      <td>False</td>
+      <td>605</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>92</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">1</td>
+      <td>False</td>
+      <td>1059</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">2</td>
+      <td>False</td>
+      <td>672</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">3</td>
+      <td>False</td>
+      <td>385</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">4</td>
+      <td>False</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>76</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">5</td>
+      <td>False</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">6</td>
+      <td>False</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">7</td>
+      <td>False</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td rowspan="2" valign="top">8</td>
+      <td>False</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>True</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>True</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+plt.style.available
+```
+
+
+
+
+    ['Solarize_Light2',
+     '_classic_test_patch',
+     'bmh',
+     'classic',
+     'dark_background',
+     'fast',
+     'fivethirtyeight',
+     'ggplot',
+     'grayscale',
+     'seaborn',
+     'seaborn-bright',
+     'seaborn-colorblind',
+     'seaborn-dark',
+     'seaborn-dark-palette',
+     'seaborn-darkgrid',
+     'seaborn-deep',
+     'seaborn-muted',
+     'seaborn-notebook',
+     'seaborn-paper',
+     'seaborn-pastel',
+     'seaborn-poster',
+     'seaborn-talk',
+     'seaborn-ticks',
+     'seaborn-white',
+     'seaborn-whitegrid',
+     'tableau-colorblind10']
+
+
+
+
+```python
+#USE A "WITH" STATEMENT TO TRY OUT DIFFERENT STYLES OF PLOTS
+#ONLY THE PLOT INDENTED UNDER THE "WITH" STATEMENT USES THE SEABORN STYLE
+
+with plt.style.context("seaborn-poster"):
+    '''Plot customer churn % against number of customer service calls
+    #CODE CITATION: https://stackoverflow.com/questions/34615854/seaborn-countplot-with-normalized-y-axis-per-group
+    '''
+    
+    x,y = 'customer service calls', 'churn'
+
+    df1 = df.groupby(x)[y].value_counts(normalize=True)
+    df1 = df1.mul(100)
+    df1 = df1.rename('Percent Churn').reset_index()
+
+    g = sns.catplot(x=x, y='Percent Churn', hue=y, kind='bar', data=df1, legend_out=False)
+    g.fig.set_size_inches(20, 7)
+    g.ax.set_title('Churn % by Number of Customer Service Calls')
+    g.ax.set_xlabel(x)
+    g.ax.set_ylabel('Percent Churn')
+    g.ax.legend(loc='upper center')
+    g.ax.set_ylim(0,100)
+
+
+    #PRINT CHURN PERCENTAGE ON CAT PLOT
+    for p in g.ax.patches:
+        txt = str(p.get_height().round(1)) + '%'
+        txt_x = p.get_x() 
+        txt_y = p.get_height()
+        g.ax.text(txt_x, txt_y, txt, fontdict={'fontsize': 15})
+```
+
+
+
+![png](output_24_1.png)
+
+
+
+
+
+> - **There's a clear correlation between an increase and customer service calls and a higher chance of customer churn.**
+
 # SCRUB
 
 > **Now let's start preparing our data for use in machine learning models.**
@@ -682,19 +840,6 @@ df_1.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -864,19 +1009,6 @@ df_1.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1029,15 +1161,24 @@ df_1.head()
 
 
 ```python
-#DISPLAY HISTOGRAMS OF THE NUMERIC FEATURE COLUMNS
-def feature_view(df, columns=None):
-   df[columns].hist(bins=25,figsize=(16,16),xlabelsize='10',ylabelsize='10',xrot=-15)
+df.select_dtypes(include=numerics)
 
-feature_view(df, num_cols)
+df.select_dtypes(include=[np.number])
 ```
 
 
-![png](output_28_0.png)
+```python
+#DISPLAY HISTOGRAMS OF THE NUMERIC FEATURE COLUMNS
+def feature_view(df):
+    '''Displays individual histograms of all numeric features'''
+    columns = list(df.select_dtypes(include=[np.number]).columns.values)
+    df[columns].hist(bins=25,figsize=(16,16),xlabelsize='10',ylabelsize='10',xrot=-15)
+
+feature_view(df)
+```
+
+
+![png](output_34_0.png)
 
 
 > **We will definitely need to scale our numerical feature columns before we train our models. As you can see above, "account length", "customer service calls", and voicemail messages have significantly different magnitudes.**
@@ -1095,134 +1236,9 @@ print(df_1['customer service calls'].value_counts())
 
 > - **Since the numerical value actually has meaning here, we're not going to one-hot-encode this column in order to preserve the relationship.**
 
+> **It's clear that after 4 calls to customer service  "churn" increases dramatically. However, it's important to note that the amount of observations decreases significantly after 3 customer service calls.** 
 
-```python
-cust_svc_churn = df.groupby(["customer service calls", "churn"]).size()
-cs_df = pd.DataFrame(cust_svc_churn)
-display(cs_df)
-
-#Figure out a way to calculate and display churn percentage for number of customer service calls
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th>0</th>
-    </tr>
-    <tr>
-      <th>customer service calls</th>
-      <th>churn</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan="2" valign="top">0</td>
-      <td>False</td>
-      <td>605</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>92</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">1</td>
-      <td>False</td>
-      <td>1059</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>122</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">2</td>
-      <td>False</td>
-      <td>672</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>87</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">3</td>
-      <td>False</td>
-      <td>385</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>44</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">4</td>
-      <td>False</td>
-      <td>90</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">5</td>
-      <td>False</td>
-      <td>26</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">6</td>
-      <td>False</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">7</td>
-      <td>False</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td rowspan="2" valign="top">8</td>
-      <td>False</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>True</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>True</td>
-      <td>2</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
+> **For example, there are only 2 total customers that called customer service 8 times- one canceled their contract, and one did not.**
 
 
 ```python
@@ -1232,38 +1248,11 @@ display(cs_df)
 plt.figure(figsize=(16, 6))
 mask = np.triu(np.ones_like(df.corr(), dtype=np.bool))
 heatmap = sns.heatmap(df.corr(), mask=mask, vmin=-1, vmax=1, annot=True, cmap='BrBG')
-heatmap.set_title('Telecom Customer Churn data', fontdict={'fontsize':18}, pad=16);
+heatmap.set_title('SyriaTel Customer Churn data collinearity', fontdict={'fontsize':18}, pad=16);
 ```
 
 
-![png](output_37_0.png)
-
-
-
-```python
-#LOOK AT SUM OF BOOLEANS IN EACH ROW TO DETERMINE WHICH VARIABLES HAVE THE MOST CORRELATIONS > .75
-sum_row = test_corr.sum(axis=1)
-print(sum_row - 1) #SUBTRACT 1 TO ACCOUNT FOR THE DIAGONAL
-```
-
-    account length            0
-    area code                 0
-    number vmail messages     0
-    total day minutes         1
-    total day calls           0
-    total day charge          1
-    total eve minutes         1
-    total eve calls           0
-    total eve charge          1
-    total night minutes       1
-    total night calls         0
-    total night charge        1
-    total intl minutes        1
-    total intl calls          0
-    total intl charge         1
-    customer service calls    0
-    churn                     0
-    dtype: int64
+![png](output_43_0.png)
 
 
 > **Looks like we multi-collinearity between the following features:**
@@ -1284,6 +1273,12 @@ Citation: https://www.researchgate.net/post/Are_Random_Forests_affected_by_multi
 
 # MODEL
 
+
+```python
+#Lead with a logistic regression model before RandomForest
+#Helps to show superiority of the RandomForest...and important to understand how to use
+```
+
 > **Model selection thought process:**
 > - After exploring the data, we can see that even after preprocessing we'll have data with class imbalance and multicollinearity issues that will effect our model's prediction accuracy. In other words, because our target variable ("churn") has way more "False" entries, our model will probably be great at predicting when a customer will stay with SyriaTel, but not great at predicting if they are going to cancel their contract ("churn" = "True"). 
 
@@ -1299,6 +1294,7 @@ Citation: https://www.researchgate.net/post/Are_Random_Forests_affected_by_multi
 ```python
 #IMPORT SKLEARN MODULES FOR PRE-PROCESSING
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.compose import ColumnTransformer, make_column_transformer, make_column_selector
@@ -1364,6 +1360,90 @@ preprocessor = ColumnTransformer(
 
 
 ```python
+#BUILD PIPELINE WITH LOGISTIC REGRESSION AS BASELINE CLASSIFIER
+pipe_base = Pipeline(steps=[
+    ("preprocessing", preprocessor), 
+    ("log_clf", LogisticRegression())])
+
+#VISUALIZE OUR PIPELINE
+pipe_base
+```
+
+
+
+
+<style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ea9ddd9d-18df-4ad2-8b0e-77026b659560" type="checkbox" ><label class="sk-toggleable__label" for="ea9ddd9d-18df-4ad2-8b0e-77026b659560">Pipeline</label><div class="sk-toggleable__content"><pre>
+
+
+
+
+```python
+#FIT THE LOGISTIC REGRESSION MODEL TO THE TRAINING DATA
+log_clf = pipe_base.fit(X_train, y_train)
+```
+
+
+```python
+#BUILD FUNCTION TO VISUALIZE MODEL ASSESSMENT 
+
+def model_assessment(model, X_test, y_test):
+    '''Print out model performance metrics'''
+    
+    #FINAL MODEL SCORE
+    print(f"Final Model Score: {model.score(X_test, y_test):.2%}", "\n")
+    
+    #CLASSIFICATION REPORT
+    pred = model.predict(X_test)
+    print("Classification report: ", "\n", classification_report(y_test, pred))
+    
+    #VISUALIZE CONFUSION MATRIX
+    fig, ax = plt.subplots(figsize=(10,4),ncols=2)
+    plot_confusion_matrix(model, X_test, y_test,cmap="Blues", ax=ax[0], normalize="true")
+
+    ax[0].set(title='Confusion Matrix')
+    y_score = model.predict_proba(X_test)[:,1]
+    fpr,tpr,thresh = roc_curve(y_test,y_score)
+
+    #PLOT AND VISUALIZE ROC CURVE
+    roc_auc = round(auc(fpr, tpr), 3)
+    ax[1].plot(fpr,tpr,color='darkorange',label=f'AUC={roc_auc}')
+    ax[1].plot([0,1],[0,1],ls=':')
+    ax[1].legend()
+    ax[1].grid()
+    ax[1].set(ylabel='True Positive Rate',xlabel='False Positive Rate',
+            title='Receiver operating characteristic (ROC) Curve')
+    plt.tight_layout()
+    sns.reset_defaults()
+    plt.show()
+```
+
+
+```python
+#EVALUATE LOGISTIC REGRESSION BASE MODEL PREDICTIONS USING TEST DATA
+
+model_assessment(log_clf, X_test, y_test)
+```
+
+    Final Model Score: 86.50% 
+    
+    Classification report:  
+                   precision    recall  f1-score   support
+    
+           False       0.88      0.97      0.93       857
+            True       0.57      0.22      0.32       143
+    
+        accuracy                           0.86      1000
+       macro avg       0.73      0.60      0.62      1000
+    weighted avg       0.84      0.86      0.84      1000
+    
+
+
+
+![png](output_62_1.png)
+
+
+
+```python
 #BUILD PIPELINE WITH RANDOM FOREST CLASSIFIER
 pipe = Pipeline(steps=[
     ("preprocessing", preprocessor), 
@@ -1376,49 +1456,7 @@ pipe
 
 
 
-<style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="b4b0469c-363a-4dd3-a39c-371b8ad9a988" type="checkbox" ><label class="sk-toggleable__label" for="b4b0469c-363a-4dd3-a39c-371b8ad9a988">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessing',
-                 ColumnTransformer(transformers=[('cat',
-                                                  Pipeline(steps=[('ohe',
-                                                                   OneHotEncoder(sparse=False))]),
-                                                  ['international plan',
-                                                   'area code',
-                                                   'voice mail plan']),
-                                                 ('num',
-                                                  Pipeline(steps=[('rbs',
-                                                                   RobustScaler())]),
-                                                  ['account length',
-                                                   'area code',
-                                                   'number vmail messages',
-                                                   'total day minutes',
-                                                   'total day calls',
-                                                   'total day charge',
-                                                   'total eve minutes',
-                                                   'total eve calls',
-                                                   'total eve charge',
-                                                   'total night minutes',
-                                                   'total night calls',
-                                                   'total night charge',
-                                                   'total intl minutes',
-                                                   'total intl calls',
-                                                   'total intl charge',
-                                                   'customer service '
-                                                   'calls'])])),
-                ('rf_clf', RandomForestClassifier())])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="bb4aba11-53aa-48a7-85e6-652b29cdad8a" type="checkbox" ><label class="sk-toggleable__label" for="bb4aba11-53aa-48a7-85e6-652b29cdad8a">preprocessing: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('cat',
-                                 Pipeline(steps=[('ohe',
-                                                  OneHotEncoder(sparse=False))]),
-                                 ['international plan', 'area code',
-                                  'voice mail plan']),
-                                ('num',
-                                 Pipeline(steps=[('rbs', RobustScaler())]),
-                                 ['account length', 'area code',
-                                  'number vmail messages', 'total day minutes',
-                                  'total day calls', 'total day charge',
-                                  'total eve minutes', 'total eve calls',
-                                  'total eve charge', 'total night minutes',
-                                  'total night calls', 'total night charge',
-                                  'total intl minutes', 'total intl calls',
-                                  'total intl charge',
-                                  'customer service calls'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="2a6a9f85-2717-4a4a-b9cb-eb26ecad6670" type="checkbox" ><label class="sk-toggleable__label" for="2a6a9f85-2717-4a4a-b9cb-eb26ecad6670">cat</label><div class="sk-toggleable__content"><pre>['international plan', 'area code', 'voice mail plan']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="56741789-d325-4814-8a4e-62e6e9be521e" type="checkbox" ><label class="sk-toggleable__label" for="56741789-d325-4814-8a4e-62e6e9be521e">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(sparse=False)</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="87b90dd6-adc6-4bef-8dd3-b8560180ddad" type="checkbox" ><label class="sk-toggleable__label" for="87b90dd6-adc6-4bef-8dd3-b8560180ddad">num</label><div class="sk-toggleable__content"><pre>['account length', 'area code', 'number vmail messages', 'total day minutes', 'total day calls', 'total day charge', 'total eve minutes', 'total eve calls', 'total eve charge', 'total night minutes', 'total night calls', 'total night charge', 'total intl minutes', 'total intl calls', 'total intl charge', 'customer service calls']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="fffad7ae-cd4c-4932-93db-61793eacffa3" type="checkbox" ><label class="sk-toggleable__label" for="fffad7ae-cd4c-4932-93db-61793eacffa3">RobustScaler</label><div class="sk-toggleable__content"><pre>RobustScaler()</pre></div></div></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="31c215d1-c943-44f9-af89-c89e5432980c" type="checkbox" ><label class="sk-toggleable__label" for="31c215d1-c943-44f9-af89-c89e5432980c">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier()</pre></div></div></div></div></div></div></div>
+<style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1bf2b17d-e276-4027-aa80-d6cf067adf61" type="checkbox" ><label class="sk-toggleable__label" for="1bf2b17d-e276-4027-aa80-d6cf067adf61">Pipeline</label><div class="sk-toggleable__content"><
 
 
 
@@ -1426,65 +1464,104 @@ pipe
 
 
 ```python
-#FIT THE MODEL TO THE TRAINING DATA
+#FIT RANDOM FOREST CLASSIFIER TO THE TRAINING DATA
 rf_clf = pipe.fit(X_train, y_train)
-
-#EVALUATE THE MODEL'S PERFORMANCE ON THE TRAINING DATA
-rf_cv_score = cross_val_score(rf_clf, X_train, y_train, cv=3)
-mean_rf_cv_score = np.mean(rf_cv_score)
-
-print(f"Mean Cross Validation Score: {mean_rf_cv_score :.2%}")
 ```
 
-    Mean Cross Validation Score: 93.87%
-
-
-#### EVALUATE MODEL PERFORMANCE AND PREDICTIONS
+> **Before we check out how our models do, let's take a look at the class imbalances in our target feature for both our testing and training data, to make sure that there aren't significant differences that could affect model performance.**
 
 
 ```python
-#BUILD FUNCTION TO VISUALIZE MODEL ASSESSMENT 
+#VALUE COUNTS FOR TRAINING AND TEST TARGET COLUMN ("CHURN")
 
-def model_assessment(model, X_test, y_test):
+def tgt_class_imbalance(y_test, y_train):
 
-    fig, ax = plt.subplots(figsize=(10,4),ncols=2)
-    plot_confusion_matrix(model, X_test, y_test,cmap="Blues", ax=ax[0], normalize="true")
+    '''Visualize target variable class imbalance for test and train data'''
+    
+    #CREATE SUBPLOTS
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(20,10))
+    
+    
+    #CHANGE "y_test" NUMPY ARRAY INTO A PANDAS DATAFRAME
+    y_test_df = pd.DataFrame(y_test)
 
-    ax[0].set(title='Confusion Matrix')
-    y_score = model.predict_proba(X_test)[:,1]
-    fpr,tpr,thresh = roc_curve(y_test,y_score)
+    #ADD AN INDEX
+    y_test_df.index = [x for x in range(0, len(y_test_df.values))]
 
-    roc_auc = round(auc(fpr, tpr), 3)
-    ax[1].plot(fpr,tpr,color='darkorange',label=f'AUC={roc_auc}')
-    ax[1].plot([0,1],[0,1],ls=':')
-    ax[1].legend()
-    ax[1].grid()
-    ax[1].set(ylabel='True Positive Rate',xlabel='False Positive Rate',
-            title='Receiver operating characteristic (ROC) Curve')
-    plt.tight_layout()
-    plt.show()
+    #PLOT VALUE COUNTS
+    y_test_count = y_test_df['churn'].value_counts(normalize=True)
+
+    sns.barplot(x=y_test_count.index, y=y_test_count.values, ax=ax1)
+
+    ax1.set_title("Class Imbalance in Target Value TESTING Data", fontdict={'fontsize': 15})
+    ax1.set_xlabel("Testing Data 'Churn'", fontdict={'fontsize': 15})
+    
+    ax1.set_ylabel("% of Test Data", fontdict={'fontsize': 15});
+    
+    
+    #CHANGE "y_train" NUMPY ARRAY INTO A PANDAS DATAFRAME
+    y_train_df = pd.DataFrame(y_train)
+
+    #ADD AN INDEX
+    y_train_df.index = [x for x in range(0, len(y_train_df.values))]
+
+    #PLOT VALUE COUNTS
+    y_train_count = y_train_df['churn'].value_counts(normalize=True)
+
+    sns.barplot(x=y_train_count.index, y=y_train_count.values, ax=ax2)
+
+    ax2.set_title("Class Imbalance in Target Value TRAINING Data", fontdict={'fontsize': 15})
+    ax2.set_xlabel("Training Data 'Churn'", fontdict={'fontsize': 15})
+    ax2.set_ylabel("% of Train Data", fontdict={'fontsize': 15});
 ```
+
+
+```python
+tgt_class_imbalance(y_test, y_train)
+```
+
+
+![png](output_68_0.png)
+
+
+> **OK, looks like there is not a significant difference between our test and train target feature.**
 
 #### VISUALIZE MODEL PERFORMANCE AND PREDICTION ACCURACY
 
 
 ```python
-#EVALUATE MODEL PREDICTIONS USING TEST DATA
+#EVALUATE RANDOM FOREST MODEL PREDICTIONS USING TEST DATA
 
-print(f"Final Model Score: {rf_clf.score(X_test, y_test)}")
 model_assessment(rf_clf, X_test, y_test)
 ```
 
-    Final Model Score: 0.948
+    Final Model Score: 95.00% 
+    
+    Classification report:  
+                   precision    recall  f1-score   support
+    
+           False       0.95      1.00      0.97       857
+            True       0.99      0.66      0.79       143
+    
+        accuracy                           0.95      1000
+       macro avg       0.97      0.83      0.88      1000
+    weighted avg       0.95      0.95      0.95      1000
+    
 
 
 
-![png](output_59_1.png)
+![png](output_71_1.png)
 
 
-> **Just as we expected, our RandomForest did almost perfect classifying False events (meaning the customer did not cancel their phone plan). We can tell this from the normalized score of "1" for True Negative quadrant of the confusion matrix.**
+> **Our LogisticRegression baseline model did significantly worse than our RandomForest model.**
+> - LogisticRegression Final Score: 87%
+> - RandomForest: 95%
 
-> **However, it only correctly predicted 65% of the time that the customer would cancel their plan (i.e. a "True" value for "churn"), which is what we really care about! This is also referred to as the True Positive rate or "Recall" score.**
+> **However, our RandomForest classifier leaves some things to be desired:**
+
+> - **Just as we expected, our RandomForest did almost perfect classifying False events (meaning the customer did not cancel their phone plan). We can tell this from the normalized score of "1" for True Negative quadrant of the confusion matrix.**
+
+> - **However, it only correctly predicted 65% of the time that the customer would cancel their plan (i.e. a "True" value for "churn"), which is what we really care about! This is also referred to as the True Positive rate or "Recall" score.**
 
 > **Our next step will be to tune our RandomForest classifier to maximize our Recall score to predict which customers are most likely to cancel their contract.**
 
@@ -1493,12 +1570,13 @@ model_assessment(rf_clf, X_test, y_test)
 
 ```python
 #LET'S LOOK AT FEATURE IMPORTANCE
-#CODE CITATION: https://towardsdatascience.com/extracting-feature-importances-from-scikit-learn-pipelines-18c79b4ae09a
 
 import eli5
 
 def ft_importance(model):
-
+    '''Print out model feature importance
+    CODE CITATION: https://towardsdatascience.com/extracting-feature-importances-from-scikit-learn-pipelines-18c79b4ae09a
+    '''
     onehot_columns = list(
         pipe.named_steps['preprocessing'].named_transformers_['cat'].named_steps['ohe'].get_feature_names(
             input_features=cat_cols))
@@ -1506,9 +1584,12 @@ def ft_importance(model):
     numeric_features_list = list(num_cols)
     numeric_features_list.extend(onehot_columns)
 
+    return eli5.explain_weights(pipe.named_steps[model], top=50, feature_names=numeric_features_list)
+                            
+```
 
-    return eli5.explain_weights(pipe.named_steps[model], top=30, feature_names=numeric_features_list)
 
+```python
 ft_importance('rf_clf')
 ```
 
@@ -1522,357 +1603,17 @@ ft_importance('rf_clf')
     }
 </style>
 
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
-
-    
-
-    
-        <table class="eli5-weights eli5-feature-importances" style="border-collapse: collapse; border: none; margin-top: 0em; table-layout: auto;">
-    <thead>
-    <tr style="border: none;">
-        <th style="padding: 0 1em 0 0.5em; text-align: right; border: none;">Weight</th>
-        <th style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">Feature</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr style="background-color: hsl(120, 100.00%, 80.00%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.1363
-                
-                    &plusmn; 0.1253
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total night calls
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 81.51%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.1218
-                
-                    &plusmn; 0.1248
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total intl minutes
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 82.46%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.1130
-                
-                    &plusmn; 0.0445
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                voice mail plan_yes
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 88.33%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0631
-                
-                    &plusmn; 0.0475
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                customer service calls
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 88.63%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0608
-                
-                    &plusmn; 0.0467
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total intl calls
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 90.04%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0503
-                
-                    &plusmn; 0.0502
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                area code_510
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 90.08%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0501
-                
-                    &plusmn; 0.0844
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                account length
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 90.92%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0441
-                
-                    &plusmn; 0.0490
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                voice mail plan_no
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 91.00%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0436
-                
-                    &plusmn; 0.0509
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                area code_415
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 91.05%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0432
-                
-                    &plusmn; 0.0808
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                area code
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 91.67%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0390
-                
-                    &plusmn; 0.0336
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                area code_408
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 92.25%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0352
-                
-                    &plusmn; 0.0284
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                international plan_no
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 92.37%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0344
-                
-                    &plusmn; 0.0252
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total night charge
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 92.53%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0334
-                
-                    &plusmn; 0.0241
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                international plan_yes
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 92.87%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0312
-                
-                    &plusmn; 0.0265
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total eve calls
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 93.15%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0295
-                
-                    &plusmn; 0.0256
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total intl charge
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 94.23%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0231
-                
-                    &plusmn; 0.0370
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total night minutes
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 95.50%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0162
-                
-                    &plusmn; 0.0374
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total day charge
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 96.15%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0129
-                
-                    &plusmn; 0.0313
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total eve minutes
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 97.38%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0075
-                
-                    &plusmn; 0.0114
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total eve charge
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 98.12%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0047
-                
-                    &plusmn; 0.0081
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total day minutes
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 98.41%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0037
-                
-                    &plusmn; 0.0078
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                total day calls
-            </td>
-        </tr>
-    
-        <tr style="background-color: hsl(120, 100.00%, 98.72%); border: none;">
-            <td style="padding: 0 1em 0 0.5em; text-align: right; border: none;">
-                0.0027
-                
-                    &plusmn; 0.0065
-                
-            </td>
-            <td style="padding: 0 0.5em 0 0.5em; text-align: left; border: none;">
-                number vmail messages
-            </td>
-        </tr>
-    
-    
-    </tbody>
+       
 </table>
     
 
-    
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-
-
-
-
-
-> - **Our classifier decided that "total night calls" was the most important feature to use during classification.**
+> - **Our classifier decided that "total intl minutes" was the most important feature to use during classification.**
 
 > - **Remember that we have to take feature importance in trees with a grain of salt due to the multicollinearity issues we discovered during the exploration phase.**
+
+> - **Later on we'll explore using permutation importance which will give us a better understanding of which features are more important to our model's predictions.**
 
 ### GRIDSEARCHCV TO FIND BEST RANDOM FOREST HYPERPARAMETERS
 
@@ -1899,6 +1640,9 @@ param_grid = {
 scorers = {
     'recall_score': make_scorer(recall_score),
 }
+
+#All you have to say in your Gridsearch is say scoring="recall"
+#Look at slack message and documentation
 ```
 
 #### INSTANTIATE GRIDSEARCH AND FIT MODEL
@@ -1916,62 +1660,7 @@ rf_grid_search.fit(X_train, y_train)
 
 
 
-<style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="2d7fdbdf-c214-447e-b4e3-b81802c20882" type="checkbox" ><label class="sk-toggleable__label" for="2d7fdbdf-c214-447e-b4e3-b81802c20882">GridSearchCV</label><div class="sk-toggleable__content"><pre>GridSearchCV(cv=5,
-             estimator=Pipeline(steps=[('preprocessing',
-                                        ColumnTransformer(transformers=[('cat',
-                                                                         Pipeline(steps=[('ohe',
-                                                                                          OneHotEncoder(sparse=False))]),
-                                                                         ['international '
-                                                                          'plan',
-                                                                          'area '
-                                                                          'code',
-                                                                          'voice '
-                                                                          'mail '
-                                                                          'plan']),
-                                                                        ('num',
-                                                                         Pipeline(steps=[('rbs',
-                                                                                          RobustScaler())]),
-                                                                         ['account '
-                                                                          'length',
-                                                                          'area '
-                                                                          'code',
-                                                                          'number '
-                                                                          'vmail '
-                                                                          'messages',
-                                                                          'total '
-                                                                          'day '
-                                                                          'minutes',
-                                                                          'total '
-                                                                          'da...
-                                                                          'charge',
-                                                                          'customer '
-                                                                          'service '
-                                                                          'calls'])])),
-                                       ('rf_clf', RandomForestClassifier())]),
-             param_grid={'rf_clf__class_weight': ['balanced',
-                                                  'balanced_subsample'],
-                         'rf_clf__criterion': ['gini', 'entropy'],
-                         'rf_clf__max_depth': [None, 5, 10, 15],
-                         'rf_clf__n_estimators': [500, 700]},
-             refit='recall_score', return_train_score=True,
-             scoring={'recall_score': make_scorer(recall_score)})</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3954c887-60f9-4f59-bf70-20bef722f347" type="checkbox" ><label class="sk-toggleable__label" for="3954c887-60f9-4f59-bf70-20bef722f347">preprocessing: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('cat',
-                                 Pipeline(steps=[('ohe',
-                                                  OneHotEncoder(sparse=False))]),
-                                 ['international plan', 'area code',
-                                  'voice mail plan']),
-                                ('num',
-                                 Pipeline(steps=[('rbs', RobustScaler())]),
-                                 ['account length', 'area code',
-                                  'number vmail messages', 'total day minutes',
-                                  'total day calls', 'total day charge',
-                                  'total eve minutes', 'total eve calls',
-                                  'total eve charge', 'total night minutes',
-                                  'total night calls', 'total night charge',
-                                  'total intl minutes', 'total intl calls',
-                                  'total intl charge',
-                                  'customer service calls'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="47dc56ca-2056-4ae8-9038-ac6734892a93" type="checkbox" ><label class="sk-toggleable__label" for="47dc56ca-2056-4ae8-9038-ac6734892a93">cat</label><div class="sk-toggleable__content"><pre>['international plan', 'area code', 'voice mail plan']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ef2631a1-83b1-44a9-a5cb-1c486c71a147" type="checkbox" ><label class="sk-toggleable__label" for="ef2631a1-83b1-44a9-a5cb-1c486c71a147">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(sparse=False)</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="70a0cd47-6c07-4193-b27e-834d359e0c0e" type="checkbox" ><label class="sk-toggleable__label" for="70a0cd47-6c07-4193-b27e-834d359e0c0e">num</label><div class="sk-toggleable__content"><pre>['account length', 'area code', 'number vmail messages', 'total day minutes', 'total day calls', 'total day charge', 'total eve minutes', 'total eve calls', 'total eve charge', 'total night minutes', 'total night calls', 'total night charge', 'total intl minutes', 'total intl calls', 'total intl charge', 'customer service calls']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="98993a7c-5d70-45c2-90fd-3af986abf6c9" type="checkbox" ><label class="sk-toggleable__label" for="98993a7c-5d70-45c2-90fd-3af986abf6c9">RobustScaler</label><div class="sk-toggleable__content"><pre>RobustScaler()</pre></div></div></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="4bd95a47-2386-4852-8ea0-d4d7e836a230" type="checkbox" ><label class="sk-toggleable__label" for="4bd95a47-2386-4852-8ea0-d4d7e836a230">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier()</pre></div></div></div></div></div></div></div></div></div></div></div></div>
-
-
+<style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9dc89202-85a9-4d97-8156-0b747e4cc882" type="checkbox" ><label class="sk-toggleable__label" for="9dc89202-85a9-4d97-8156-0b747e4cc882">GridSearchCV</label><div class="sk-toggleable__content"><pre>
 
 # iNTERPRET
 
@@ -1992,9 +1681,9 @@ print(f"Optimal Parameter for Best Recall: {rf_grid_search.best_params_}")
 
     Mean Training Score: 93.44%
     
-    Best Training Recall Score: 77.06%
+    Best Training Recall Score: 78.24%
     
-    Optimal Parameter for Best Recall: {'rf_clf__class_weight': 'balanced_subsample', 'rf_clf__criterion': 'gini', 'rf_clf__max_depth': 5, 'rf_clf__n_estimators': 500}
+    Optimal Parameter for Best Recall: {'rf_clf__class_weight': 'balanced_subsample', 'rf_clf__criterion': 'entropy', 'rf_clf__max_depth': 5, 'rf_clf__n_estimators': 500}
 
 
 > **After GridSearch, our average training score was almost identical to our original Random Forest Model, but our Recall score increased 8%!**
@@ -2007,30 +1696,111 @@ print(f"Optimal Parameter for Best Recall: {rf_grid_search.best_params_}")
 ```python
 #LET'S SEE HOW OUR GRIDSEARCH MODEL DOES ON THE TEST DATA!
 
-print(f"Final Model Score: {rf_grid_search.score(X_test, y_test):.2%}")
 model_assessment(rf_grid_search, X_test, y_test)
 ```
 
-    Final Model Score: 81.12%
+    Final Model Score: 88.81% 
+    
+    Classification report:  
+                   precision    recall  f1-score   support
+    
+           False       0.98      0.98      0.98       857
+            True       0.90      0.89      0.89       143
+    
+        accuracy                           0.97      1000
+       macro avg       0.94      0.94      0.94      1000
+    weighted avg       0.97      0.97      0.97      1000
+    
 
 
 
-![png](output_77_1.png)
+![png](output_90_1.png)
 
 
 > **WOW!! We had a huge improvement in Recall score! GridSearch found the best parameters to predict whether a customer is going to cancel their account with SyriaTel.**
 
+
+```python
+#LET'S LOOK AT PERMUTATION IMPORTANCE TO SEE WHICH FEATURES WERE MOST HEAVILY RELIED ON IN MODELING PROCESS
+#Citation: https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py
+
+from sklearn.inspection import permutation_importance
+
+result = permutation_importance(rf_grid_search, X_test, y_test)
+
+sorted_idx = result.importances_mean.argsort()
+
+fig, ax = plt.subplots(figsize=(12,8))
+ax.boxplot(result.importances[sorted_idx].T,
+           vert=False, labels=X_test.columns[sorted_idx])
+ax.set_title("Permutation Importances (test set)")
+ax.set_xlabel("Importance score")
+fig.tight_layout()
+plt.show()
+
+```
+
+
+![png](output_92_0.png)
+
+
+> - **Permutation importance overcomes one of the major issues with scikit learn's default feature importance function.**
+
+> - **In our case, we have features that experience multicollinearity and vary in their scale (even after pre-processing), which will skew our feature importance results.**
+
+> - **Permutation importance "directly measures variable importance by observing the effect on model accuracy of randomly shuffling each predictor variable" to overcome multicollinearity problems.**
+
+> Citation: https://explained.ai/rf-importance/index.html#5
+
+> - **As we expected from our EDA and domain knowledge, customer service calls were the most heavily weighted feature used by our model to predict customer churn.** 
+
+
+```python
+#USE A "WITH" STATEMENT TO TRY OUT DIFFERENT STYLES OF PLOTS
+#ONLY THE PLOT INDENTED UNDER THE "WITH" STATEMENT USES THE SEABORN STYLE
+
+with plt.style.context("seaborn-poster"):
+    '''Plot customer churn % against number of customer service calls
+    #CODE CITATION: https://stackoverflow.com/questions/34615854/seaborn-countplot-with-normalized-y-axis-per-group
+    '''
+    
+    x,y = 'customer service calls', 'churn'
+
+    df1 = df.groupby(x)[y].value_counts(normalize=True)
+    df1 = df1.mul(100)
+    df1 = df1.rename('Percent Churn').reset_index()
+
+    g = sns.catplot(x=x, y='Percent Churn', hue=y, kind='bar', data=df1, legend_out=False)
+    g.fig.set_size_inches(20, 7)
+    g.ax.set_title('Churn % by Number of Customer Service Calls')
+    g.ax.set_xlabel(x)
+    g.ax.set_ylabel('Percent Churn')
+    g.ax.legend(loc='upper center')
+    g.ax.set_ylim(0,100)
+
+
+    #PRINT CHURN PERCENTAGE ON CAT PLOT
+    for p in g.ax.patches:
+        txt = str(p.get_height().round(1)) + '%'
+        txt_x = p.get_x() 
+        txt_y = p.get_height()
+        g.ax.text(txt_x, txt_y, txt, fontdict={'fontsize': 15})
+```
+
+
+
+![png](output_95_1.png)
+
+
 # CONCLUSIONS & RECOMMENDATIONS
 
-> - **Our RandomForest model (after using GridSearhCV) can predict customer "churn" with 81% accuracy.**
+> - **Our RandomForest model (after using GridSearhCV) can predict customer "churn" with 84% accuracy.**
 
-> - **In this dataset, customers who had the highest number of calls during the evening/night and had voice mail plans were the most likely to leave.** 
-
-> - **A higher number of customer service calls was also an importance indicator of churn (but not the highest).**
+> - **In this dataset, customers who had more than 3 calls to customer service were statistically the most likely to cancel their contracts with SyriaTel.**
 
 **Business recommendations:**
 
-> 1. Provide SyriaTel account executives statistics on their customer night and international phone usage, and if they have a voice mail plan. Account executives should pay additional attention to their customers that have the highest usage in these categories, as they are statistically most  likely to cancel their contracts in the near future.
+> 1. Focus on improving customer satisfaction. It's clear (and not surprising) that customers with more calls to customer service would cancel their contracts. Ensure account executives are actively tracking customers with 3 or more calls to customer service calls, and set-aside more time to trouble-shoot issues directly with their accounts.
  
 
 > 2. Build a **company-wide data aggregator and visualization dashboard** that continuously tracks the customer accounts with the voice mail plan, the highest evening/night phone usage, and number of calls to customer service. This would allow SyriaTel senior management to track the customers with the highest probability of canceling their contracts and facilitate new strategy development for the Customer Success department. 
