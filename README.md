@@ -1506,50 +1506,7 @@ model_assessment(rf_clf, X_test, y_test)
 
 > **Our next step will be to tune our RandomForest classifier to maximize our Recall score to predict which customers are most likely to cancel their contract.**
 
-#### FEATURE IMPORTANCE ANALYSIS
 
-
-```python
-#LET'S LOOK AT FEATURE IMPORTANCE
-
-import eli5
-
-def ft_importance(model):
-    '''Print out model feature importance
-    CODE CITATION: https://towardsdatascience.com/extracting-feature-importances-from-scikit-learn-pipelines-18c79b4ae09a
-    '''
-    onehot_columns = list(
-        pipe.named_steps['preprocessing'].named_transformers_['cat'].named_steps['ohe'].get_feature_names(
-            input_features=cat_cols))
-
-    numeric_features_list = list(num_cols)
-    numeric_features_list.extend(onehot_columns)
-
-    return eli5.explain_weights(pipe.named_steps[model], top=50, feature_names=numeric_features_list)
-                            
-```
-
-
-```python
-ft_importance('rf_clf')
-```
-
-
-
-
-
-    
-    table.eli5-weights tr:hover {
-        filter: brightness(85%);
-    }
-
-
-
-> - **Our classifier decided that "total intl minutes" was the most important feature to use during classification.**
-
-> - **Remember that we have to take feature importance in trees with a grain of salt due to the multicollinearity issues we discovered during the exploration phase.**
-
-> - **Later on we'll explore using permutation importance which will give us a better understanding of which features are more important to our model's predictions.**
 
 ### GRIDSEARCHCV TO FIND BEST RANDOM FOREST HYPERPARAMETERS
 
