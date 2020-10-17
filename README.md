@@ -1327,12 +1327,6 @@ pipe_base = Pipeline(steps=[
     ("preprocessing", preprocessor), 
     ("log_clf", LogisticRegression())])
 
-
-
-
-
-
-```python
 #FIT THE LOGISTIC REGRESSION MODEL TO THE TRAINING DATA
 log_clf = pipe_base.fit(X_train, y_train)
 ```
